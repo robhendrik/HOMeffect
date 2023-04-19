@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HOMeffect</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14730,8 +14730,8 @@ class="
 </blockquote>
 <p>To model the beamsplitter we define the matrix below for mixing two channels. Here the transmission coefficient is $t$ and the reflection coefficient is $r$. These coefficients act on the ampitudes. So if for instance $t = r = \frac{1}{\sqrt{2}}$ the probability to be reflected is $r^{2} = \frac{1}{2}$ and the probability to be transmitted is $t^{2} = \frac{1}{2}$. So this would be a 50%/50% beamsplitter equally splitting the light between the output ports. Below we see a picture representing this beamsplitter as mixing two channels, where it is important to not the 'minus sign' that has to be included for transmission from input port 2 to output port 2.</p>
 <p>$\begin{pmatrix}
-  r &amp; t \\
-  t &amp; -r \\
+  t &amp; r \\
+  r &amp; -t \\
  \end{pmatrix}$</p>
 <p>So for input state $|10&gt;$ the output state is $|rt&gt;$, and for $|01&gt;$ the output state is $-|tr&gt;$</p>
 <p>There are some special cases which we will use further down in this notebook</p>
@@ -14765,17 +14765,17 @@ class="
 </blockquote>
 <p>To generalize the two channel matrices for a 4 channel system we can simply extend the matrix. For instance, for only mixing channels 0 and 1 in a 4 channel system the matrix would be like:</p>
 <p>$\begin{pmatrix}
-  r &amp; t &amp; 0 &amp; 0 \\
-  t &amp; -r &amp; 0 &amp; 0\\
+  r &amp; r &amp; 0 &amp; 0 \\
+  r &amp; -t &amp; 0 &amp; 0\\
   0 &amp; 0 &amp; 1 &amp; 0 \\
   0 &amp; 0 &amp; 0 &amp; 1
  \end{pmatrix}$</p>
 <p>Mixing channels 1 and 3 would look like:</p>
 <p>$\begin{pmatrix}
   1 &amp; 0 &amp; 0 &amp; 0 \\
-  0 &amp; r &amp; 0 &amp; t\\
+  0 &amp; t &amp; 0 &amp; r\\
   0 &amp; 0 &amp; 1 &amp; 0 \\
-  0 &amp; t &amp; 0 &amp; -r
+  0 &amp; r &amp; 0 &amp; -t
  \end{pmatrix}$</p>
 
 </div>
@@ -14873,8 +14873,8 @@ class="
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Modelling-the-beamsplitter-and-the-polarization-rotation">Modelling the beamsplitter and the polarization rotation<a class="anchor-link" href="#Modelling-the-beamsplitter-and-the-polarization-rotation">&#182;</a></h3><p>To model the beamsplitter we define teh function <code>mixing_matrix(r,t)</code> for mixing two channels. Here the transmission coefficient is <code>t</code> and the reflection coefficient is <code>r</code>.</p>
 <p>$\begin{pmatrix}
-  r &amp; t \\
-  t &amp; -r \\
+  t &amp; r \\
+  r &amp; -t \\
  \end{pmatrix}$</p>
 <p>To use this generic beamsplitter we call the function with <code>mixing_matrix(math.cos(theta),math.sin(theta))</code>, <code>r</code> equals $\cos(\theta)$ and <code>t</code> equals $\sin(\theta)$</p>
 <p>$\begin{pmatrix}
@@ -15854,6 +15854,9 @@ class="
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Changing-the-polarization-AFTER-the-beamsplitter-to-vary-indistinguishability">Changing the polarization AFTER the beamsplitter to vary indistinguishability<a class="anchor-link" href="#Changing-the-polarization-AFTER-the-beamsplitter-to-vary-indistinguishability">&#182;</a></h3><p>We can also change the polarization after the beamsplitter as in below illustration. In principle this also leads to 'indistinguishability', but then only after the photons have passed through the beamsplitter. What we will see is that the ration of 'bunching' and 'anti-bunching' is exactly as we would expect without quantum physics (so we do not observe the HOM effect in the beamsplitter, even though we make the photons indistinguishable before detection). What we do see is that we create 'entanglement' between the two photons when they end up in different ports, so still some very interesting quantum behavior to be observed!</p>
+<p>When we look at the ratio bunching/anti-bunching we see in this case the same value as for sequential photon pair, so there is no quantum effect (even though we removed the photon distinguishability).</p>
+<p>When we look  in more detail we see interesting quantum effects. For instance when only looking at 'bunching' for certain orientation of the polarization after the beamsplitter we see that the occurence of detecting photons with different polarization is suppressed. So there is 'bunching', but only within the output port and not between the two output ports.</p>
+<p>Another interesting effect occurs if we look only at the occurence of anti-bunching. Contrary to what we would expect we see that there is never a measurement outcome where the two photons end up in different port, with the same polarization. So if a photon behind port 1 is detected with horizontal polarization, then always the same is true for the photon in output port 2. Even though the actual detection of horizontal or vertical polarization is completely random.</p>
 
 </div>
 </div>
@@ -16177,14 +16180,21 @@ class="
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><a id="Interference"></a></p>
 <h2 id="Explaining-the-effect-by-'quantum-interference'-and-the-'boson-bonus'">Explaining the effect by 'quantum interference' and the 'boson-bonus'<a class="anchor-link" href="#Explaining-the-effect-by-'quantum-interference'-and-the-'boson-bonus'">&#182;</a></h2><ul>
-<li>We have <strong>states</strong> which consist of <strong>components</strong>. Each <strong>components</strong> has a specific measurement <strong>outcome</strong>. In the state each <strong>components</strong> has an <strong>amplitude</strong> and the <strong>probability</strong> of detecting the <strong>outcome</strong> related to a specific <strong>components</strong> is the square of the absolute value of the <strong>amplitude</strong>. As example consider the state $\alpha \cdot |0101&gt; + \beta \cdot |1010&gt;$. We have probability $|\alpha|^{2}$ of detecting outcome '0101' and $|\beta|^{2}$ of detecting outcome '1010'. Here $|\alpha|^{2} + |\beta|^{2} = 1$, as we need to have a 100% change of detecting two photons. Detecting outcome '1010' means we measure a photon in channels 0 and 2, and no photon in channels 1 and 3.</li>
-<li>manipulate states with matrices</li>
-<li>For states with multiple photons the outcomes at the output have an amplitude with is the <strong>multiplication</strong> of the amplitudes of the individual photons. As example if we 'build' a two-photon state with component $|0110&gt;$ from single photon states with amplitude $\alpha \cdot |0100&gt;$ and $\beta \cdot |0010&gt;$ then the <strong>amplitude</strong> of the two-photon component is $\alpha \beta \cdot |0110&gt;$. The <strong>probability</strong> to detect the outcome '0110' is then $|\alpha\beta|^{2}$</li>
+<li>We have <strong>states</strong> which consist of <strong>components</strong>. Each <strong>component</strong> has a specific measurement <strong>outcome</strong>. In the state each <strong>component</strong> has an <strong>amplitude</strong> and the <strong>probability</strong> of detecting the <strong>outcome</strong> related to a specific <strong>component</strong> is the square of the absolute value of the <strong>amplitude</strong>. As example consider the state $\alpha \cdot |0101&gt; + \beta \cdot |1010&gt;$. We have probability $|\alpha|^{2}$ of detecting outcome '0101' and $|\beta|^{2}$ of detecting outcome '1010'. Here $|\alpha|^{2} + |\beta|^{2} = 1$, as we need to have a 100% change of detecting two photons. Detecting outcome '1010' means we measure a photon in channels 0 and 2, and no photon in channels 1 and 3.</li>
+<li>The states can be manipulated by matrices, where the matrix components affect the <strong>amplitudes</strong> of the components. The matrices we use in this notebook are used for single photon states. If we have the matrix $M$ for a 2 channel system it works as follows on the single photon states.</li>
+</ul>
+<p>$M = \begin{pmatrix}
+  t &amp; r \\
+  r &amp; -t \\
+ \end{pmatrix}$</p>
+<p>$ t \alpha |10&gt; + r \alpha |01&gt;  = M \cdot \alpha |10&gt; \\ r \beta |10&gt; - t \beta |01&gt;  = M \cdot \beta |01&gt; $</p>
+<ul>
+<li>For states with multiple photons the outcomes at the output have an amplitude which is the <strong>multiplication</strong> of the amplitudes of the individual photons. As example if we 'build' a two-photon state with component $|0110&gt;$ from single photon states with amplitude $\alpha \cdot |0100&gt;$ and $\beta \cdot |0010&gt;$ then the <strong>amplitude</strong> of the two-photon component is $\alpha \beta \cdot |0110&gt;$. The <strong>probability</strong> to detect the outcome '0110' is then $|\alpha\beta|^{2}$</li>
 <li>If the same component appears multiple time in the output it means there are multiple ways to get to that component (for instance two photons could pass through a beamsplitter, or two photons could be reflected to lead to the same end state). In that case we have to add up the amplitudes for these components if we detect the photons simultaneously. This can lead to <strong>quantum interference</strong> where a probability is reduced due to two amplitudes cancelling eachother for the different ways to get to an component.</li>
 <li>If a component has more photons in the same channel (so component $|0200&gt;$ or $|0030&gt;$) the component will get an extra multiplier in the amplitude of the square of the photon number. So for $|0200&gt;$ the <strong>boson bonus</strong> would be $\sqrt{2}$.</li>
 </ul>
 <h3 id="Changing-the-polarization-of-the-input-ports-to-vary-'indistinguishability'">Changing the polarization of the input ports to vary 'indistinguishability'<a class="anchor-link" href="#Changing-the-polarization-of-the-input-ports-to-vary-'indistinguishability'">&#182;</a></h3><p>The photon which starts in channel 3 has two options. Either it will end up in channel 3 (i.e., pass through the NPBS), or it will end up in channel 1 (i.e., is reflected in the beamsplitter). In the first case the amplitude is $-\frac{1}{2} \sqrt{2}$ and in the second case $+\frac{1}{2} \sqrt{2}$ so the state for that photon is $\frac{1}{2} \sqrt{2} \cdot (|0100&gt; - |0001&gt;$. If we would just use that photon the probility to detect it in channel 3 would be 50%, and the probability to detect in channel 1 could be 50%.</p>
-<p>The photon starting in channel 0 has more options. It can end up in any of the channels at the output. First when we vary the polarization by 'mixing' channels 0 and 1 the photon can stay horizontally polarized and remain in channel 0. This gives an amplitude $\cos(\Theta)$. If the photon is deflected to channel 1 (change polarization to vertical) the amplitude is $\sin(\Theta)$. Then in each of these cases the photon either passes through the beamsplitter, or is reflected. This all with amplitude $\frac{1}{2} \sqrt{2}$. So the photon ends up in the state $\frac{1}{2} \sqrt{2} \cdot (\cos(\Theta)|1000&gt; + \sin(\Theta)|0100&gt; + \cos(\Theta)|0010&gt; + \sin(\Theta)|0001&gt;$. If we would just use this photon the probility to detect it in for instance channel 0 (outcome '1000') would be $\frac{1}{4}\cos(\Theta)$</p>
+<p>The photon starting in channel 0 has more options. It can end up in any of the channels at the output. First when we vary the polarization by 'mixing' channels 0 and 1 the photon can stay horizontally polarized and remain in channel 0. This gives an amplitude $\cos(\Theta)$. If the photon is deflected to channel 1 (change polarization to vertical) the amplitude is $\sin(\Theta)$. Then in each of these cases the photon either passes through the beamsplitter, or is reflected. This all with amplitude $\frac{1}{2} \sqrt{2}$. So the photon ends up in the state $\frac{1}{2} \sqrt{2} \cdot (\cos(\Theta)|1000&gt; + \sin(\Theta)|0100&gt; + \cos(\Theta)|0010&gt; + \sin(\Theta)|0001&gt;$. If we would just use this photon the probility to detect it in for instance channel 0 (outcome '1000') would be $\frac{1}{2}\cos(\Theta)^{2}$</p>
 <p>Now we look at the two photons travelling through the system simultaneously. We then look at the amplitude of the single photons and multiply then to get to the amplitude of the corresponding component in the final state. This final state in principle has 8 components (two options for the photon starting in channel 3 multiplied by four options for the photon starting in channel 0).</p>
 <p>First look at the outcomes where both photons end up with different polarization (so one horizontally and the other vertically polarized). We find that all these outcomes have the same probability.</p>
 <p>$\begin{array}{lcl|lcl}
@@ -16657,6 +16667,18 @@ class="
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>In this notebook we played with a 'simple' beamsplitter and some rotation of the polarization. Even this system already shows intriguing quantum behavior with non-classical measurement outcomes and ultimately entanglement leading to non-local correlation. The assessment has been descriptive so far (we only looked at the outcome of the computer models). A next step would be to describe the beamsplitter more deeply and also model the quantum behavior mathematically.</p>
+
+</div>
+</div>
+</div>
 </div>
 </body>
 
